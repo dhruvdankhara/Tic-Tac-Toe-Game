@@ -35,10 +35,10 @@ h1{
 
 .winner{
     font-size: 20px;
-    margin: 20px 0px 0px 35%;
+    padding-bottom: 20px;
 }
 
-.reset{
+.resetbtn{
     width: 150px;
     height: 50px;
     background-color: #412234;
@@ -47,7 +47,9 @@ h1{
     border: none;
     outline: none;
     font-size: 15px;
-    position: relative;
-    left: 40%;
-    right: 72%;
+}
+
+.end{
+    text-align: center;
+    margin: 20px;
 }
