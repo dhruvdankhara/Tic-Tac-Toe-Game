@@ -1,9 +1,11 @@
-let boxes = document.querySelectorAll(".box");
-let main = document.querySelector(".main");
-let winner = document.querySelector(".winner");
-let resetbtn = document.querySelector(".resetbtn")
-let turnX = true;
+let boxes = document.querySelectorAll(".box"); // select all boxes
+let winner = document.querySelector(".winner"); // select winner line
+let resetbtn = document.querySelector(".resetbtn"); // select reset button
 
+let turnX = true;   // first turn of X
+let click = 0;     // count click for draw
+
+// make winning patten
 let win = [
     [0, 1, 2],  
     [3, 4, 5],
@@ -15,61 +17,59 @@ let win = [
     [2, 4, 6]
 ];
 
+// undo disable button when new game start
 const disable = () => {
     for(box of boxes){
         box.disabled = true;
     }
 }
 
+//restart new game
 const reset = () => {
     for(box of boxes){
         box.disabled = false;
         box.innerText = "";
+        turnX = true;
+        winner.innerText = "";
+        click = 0;
     }
 }
 
-
+// give value to box One By One
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
         if(turnX){
             box.innerText = "X"; 
+            box.style.color = "blue";
             turnX = false;
         }else{
             box.innerText = "0";
+            box.style.color = "red";
             turnX = true;
         }
         box.disabled = true;
-        print();
+        click++;
+        check();
     });
 });
 
-
-function print(){
+// check wheter patten is match or not.
+function check(){
     for(let patten of win){
-        let patt1 = boxes[patten[0]].innerText;
-        let patt2 = boxes[patten[1]].innerText;
-        let patt3 = boxes[patten[2]].innerText;
+        let patt1 = boxes[patten[0]].innerText; //get value of first patten 
+        let patt2 = boxes[patten[1]].innerText; //get value of second patten
+        let patt3 = boxes[patten[2]].innerText; //get value of third patten
         
-        if(patt1 !== "" && patt2 !== "" && patt3 !== ""){
-            if(patt1 == patt2 && patt2 == patt3){
-                console.log(patt1);
+        if(patt1 !== "" && patt2 !== "" && patt3 !== ""){   // check box is empty or not
+            if(patt1 == patt2 && patt2 == patt3){   // check all box have same value
                 winner.innerText = `congraculations! winner is ${patt1}.`
                 disable();  
             }
-        }
-        // By me
-        // if(boxes[patten[0]].innerText == 'X' && boxes[patten[1]].innerText == 'X' && boxes[patten[2]].innerText == 'X'){
-            //     console.log("win");
-            //     winner.innerText = "Game Winner is X ."
-            // }
-            // if(boxes[patten[0]].innerText == '0' && boxes[patten[1]].innerText == '0' && boxes[patten[2]].innerText == '0'){
-                //     console.log("win");
-                //     winner.innerText = "Game Winner is O ."
-                // }
+            if(click == 9){
+                winner.innerText = "Game Is Draw. Start New Game."
             }
         }
+    }
+}
         
-        
-        
-        
-        resetbtn.addEventListener("click", reset);
+resetbtn.addEventListener("click", reset); // reset button
